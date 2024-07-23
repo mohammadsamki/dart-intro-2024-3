@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 
@@ -72,10 +72,91 @@ class Messages extends StatelessWidget {
   }
 }
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  List images = [
+    'https://picsum.photos/200/300',
+    'https://picsum.photos/200/301',
+    'https://picsum.photos/200/302',
+    'https://picsum.photos/200/303',
+    'https://picsum.photos/200/304',
+    'https://picsum.photos/200/305',
+    'https://picsum.photos/200/306',
+    'https://picsum.photos/200/307',
+  ];
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Text('this is profile page');
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("images List"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (currentIndex == 0) {
+                      currentIndex = currentIndex;
+                    } else {
+                      currentIndex -= 1;
+                    }
+                  });
+                },
+                icon: Icon(Icons.arrow_back),
+              ),
+              Container(
+                color: Colors.red,
+                child: Column(
+                  children: [
+                    Image.network(images[currentIndex]),
+                    Container(
+                      width: 200,
+                      height: 50,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: images.length,
+                          itemBuilder: (context, index) {
+                            return Icon(
+                              Icons.circle,
+                              size: images.length / .34,
+                              color: index == currentIndex
+                                  ? Colors.blue
+                                  : Colors.grey,
+                            );
+                          }),
+                    )
+                  ],
+                ),
+                width: 200,
+                height: 200,
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (currentIndex == images.length - 1) {
+                      currentIndex = currentIndex;
+                    } else {
+                      currentIndex += 1;
+                    }
+                  });
+                },
+                icon: currentIndex == images.length - 1
+                    ? Text('')
+                    : Icon(Icons.arrow_forward),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
 
